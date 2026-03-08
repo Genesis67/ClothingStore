@@ -5,7 +5,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "laravel/fortify": "*",
         "laravel/framework": "^11.0",
         "laravel/tinker": "^2.9"
@@ -53,6 +53,9 @@
         ]
     },
     "config": {
+        "platform": {
+            "php": "8.4.0"
+        },
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
