@@ -57,6 +57,7 @@
             "php": "8.4.0"
         },
         "optimize-autoloader": true,
+        "platform-check": false,
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
