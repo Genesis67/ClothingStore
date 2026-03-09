@@ -17,10 +17,11 @@ RUN npm install && npm run build
 
 RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
-
 EXPOSE 8080
 
-CMD php artisan config:clear \
-    && php artisan migrate --force \
-    && php artisan storage:link \
-    && php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080} & \
+    sleep 5 && \
+    php artisan config:clear && \
+    php artisan migrate --force && \
+    php artisan storage:link && \
+    wait
