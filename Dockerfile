@@ -11,7 +11,7 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN php -r "file_exists('.env') || copy('.env.example', '.env');"
+# RUN php -r "file_exists('.env') || copy('.env.example', '.env');"
 
 RUN composer install --no-dev --optimize-autoloader
 
