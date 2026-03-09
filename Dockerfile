@@ -12,16 +12,17 @@ COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 COPY . .
 
 RUN php -r "file_exists('.env') || copy('.env.example', '.env');"
+
 RUN composer install --no-dev --optimize-autoloader
+
 RUN npm install && npm run build
 
 RUN mkdir -p storage/framework/{sessions,views,cache} storage/logs bootstrap/cache \
     && chmod -R 777 storage bootstrap/cache
+
 EXPOSE 8080
 
-CMD php artisan serve --host=0.0.0.0 --port=${PORT:-8080} & \
-    sleep 5 && \
-    php artisan config:clear && \
+CMD php artisan config:clear && \
     php artisan migrate --force && \
     php artisan storage:link && \
-    wait
+    php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
