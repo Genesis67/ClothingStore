@@ -44,7 +44,7 @@
             </div>
 
             <div class="mt-auto pt-10">
-                <a href="https://wa.me/07026696845?text={{ urlencode('Hello, I am interested in the ' . $design->design_Name . ' design.') }}" 
+                <a href="https://wa.me/2347026696845?text={{ urlencode('Hello, I am interested in the ' . $design->design_Name . ' design.') }}" 
    target="_blank"
    class="bg-green-500 text-white px-8 py-4 rounded-full font-bold hover:bg-green-600 transition flex items-center justify-center">
     Order via WhatsApp
