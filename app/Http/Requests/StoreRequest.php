@@ -25,7 +25,7 @@ class StoreRequest extends FormRequest
             //
             'design_Name'=>'required|string|max:25',
             'description'=>'required',
-            'price'=>'required|numeric|min:0',
+            'price'=>'numeric|nullable|min:0',
             'category'=>'required|in:Gowns,Two-Piece,Wedding-Attire,ready-to-wear,Dinner-Wear',
             'fabric'=>'required|string',
             'size'=>'required|string',
