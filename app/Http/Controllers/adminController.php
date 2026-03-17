@@ -9,79 +9,70 @@ use Illuminate\Support\Facades\Storage;
 
 class adminController extends Controller
 {
-    //
-public function index(Design $design){
+    public function index(Design $design){
         $designs = Design::with('images')->get();
         return view('admin.index', compact('designs'));
-}
-public function create(){
-    return view('admin.create');
-}
-
-public function store(StoreRequest $request)
-{
-    // 1. Get validated data (Name, Price, Category, etc.)
-    $validated = $request->validated();
-
-    // 2. Create the Design record FIRST
-    // We remove 'images' from the array so it doesn't try to save them in the designs table
-    $design = Design::create(collect($validated)->except('img_path')->toArray());
-
-    // 3. Handle the multiple images
-    if ($request->hasFile('img_path')) {
-        foreach ($request->file('img_path') as $file) {
-            $path = $file->store('designs', 's3');
-
-            // Save each path into the SECOND table (design_images)
-            $design->images()->create([
-                'img_path' => $path
-            ]);
-        }
     }
 
-    return redirect()->route('adminHome')->with('success', 'Design created Successfully');
-}
+    public function create(){
+        return view('admin.create');
+    }
 
-public function edit(Design $design){
-    //define category array here because we wil use in edit blade
-    $categories = ['Gowns', 'Two-Piece', 'Wedding-Attire', 'Dinner-Wear'];
-    return view('admin.edit', compact('design', 'categories'));
-}
+    public function store(StoreRequest $request)
+    {
+        $validated = $request->validated();
+        $design = Design::create(collect($validated)->except('img_path')->toArray());
 
-public function update(UpdateRequest $request, Design $design)
-{
-    $validated = $request->validated();
+        if ($request->hasFile('img_path')) {
+            foreach ($request->file('img_path') as $file) {
+                // Changed to 's3' and added public visibility
+                $path = $file->store('designs', 's3');
 
-    // 1. Update the main Design details (Name, Price, Category, Description)
-    // We use 'except' so it doesn't try to save the 'img_path' array into the 'designs' table
-    $design->update(collect($validated)->except('img_path')->toArray());
+                $design->images()->create([
+                    'img_path' => $path
+                ]);
+            }
+        }
 
-    // 2. Check if new images were uploaded
-    if ($request->hasFile('img_path')) {
-        
-        // Optional: Delete old images from the folder and database first
+        return redirect()->route('adminHome')->with('success', 'Design created Successfully');
+    }
+
+    public function edit(Design $design){
+        $categories = ['Gowns', 'Two-Piece', 'Wedding-Attire', 'Dinner-Wear'];
+        return view('admin.edit', compact('design', 'categories'));
+    }
+
+    public function update(UpdateRequest $request, Design $design)
+    {
+        $validated = $request->validated();
+        $design->update(collect($validated)->except('img_path')->toArray());
+
+        if ($request->hasFile('img_path')) {
+            
+            // FIXED: Delete from 's3' instead of 'public'
+            foreach ($design->images as $oldImage) {
+                Storage::disk('s3')->delete($oldImage->img_path);
+                $oldImage->delete();
+            }
+
+            // FIXED: Upload to 's3' instead of 'public'
+            foreach ($request->file('img_path') as $file) {
+                $path = $file->store('designs', 's3');
+                $design->images()->create(['img_path' => $path]);
+            }
+        }
+
+        return redirect()->route('adminHome')->with('success', 'Design updated successfully!');
+    }
+
+    public function destroy(Design $design){
+        // FIXED: Delete from 's3' instead of 'public'
         foreach ($design->images as $oldImage) {
-            Storage::disk('public')->delete($oldImage->img_path);
+            Storage::disk('s3')->delete($oldImage->img_path);
             $oldImage->delete();
         }
-
-        // 3. Upload the new ones
-        foreach ($request->file('img_path') as $file) {
-            $path = $file->store('designs', 'public');
-            $design->images()->create(['img_path' => $path]);
-        }
+        
+        $design->delete();
+        return redirect()->back()->with('success', 'Design deleted successfully');
     }
-
-    return redirect()->route('adminHome')->with('success', 'Design updated successfully!');
-}
-public function destroy(Design $design){
-     foreach ($design->images as $oldImage) {
-            Storage::disk('public')->delete($oldImage->img_path);
-            $oldImage->delete();
-        }
-    $design->delete();
-    return redirect()->back()->with('success', 'Design deleted successfully');
-
-}
-
 }
