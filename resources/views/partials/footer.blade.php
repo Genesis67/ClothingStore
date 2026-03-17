@@ -7,7 +7,7 @@
             </div>
 
             <div class="flex justify-center order-1 md:order-2">
-                <img src="{{ asset('image/logo1.jpg') }}" class="h-12 w-auto opacity-80" alt="Logo">
+                <img src="{{ asset('image/logo3.jpg') }}" class="h-12 w-auto opacity-80" alt="Logo">
             </div>
 
             <div class="flex justify-center md:justify-end space-x-6 order-3">
