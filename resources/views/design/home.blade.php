@@ -115,7 +115,7 @@
                             @if($product->price)
     <p>Price: ₦{{ number_format($product->price) }}</p>
 @else
-    <p>Price: Contact for price</p> 
+   <p></p>
 @endif
                         </div>
                     </div>

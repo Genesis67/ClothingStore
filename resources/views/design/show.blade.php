@@ -37,7 +37,7 @@
                                       @if($design->price)
     <p>Price: ₦{{ number_format($design->price) }}</p>
 @else
-    <p>Price: Contact for price</p> 
+    <p></p> 
 @endif
             
             <div class="mt-8 border-t pt-6">
