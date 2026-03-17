@@ -112,7 +112,11 @@
                                 <h3 class="text-sm font-semibold text-zinc-900 uppercase tracking-tight">{{ $product->design_Name }}</h3>
                                 <p class="mt-1 text-[10px] text-zinc-400 uppercase tracking-[0.2em]">{{ $product->category }}</p>
                             </div>
-                            <p class="text-sm font-bold text-zinc-950">₦{{ number_format($product->price) }}</p>
+                            @if($design->price)
+    <p>Price: ₦{{ number_format($design->price) }}</p>
+@else
+    <p>Price: Contact for price</p> 
+@endif
                         </div>
                     </div>
                 @endforeach

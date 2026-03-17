@@ -42,7 +42,11 @@
 
                 {{-- PRICE --}}
                 <div class="mt-4 text-lg font-bold text-gray-900">
-                    ₦{{ number_format($design->price) }}
+                                           @if($design->price)
+    <p>Price: ₦{{ number_format($design->price) }}</p>
+@else
+    <p>Price: Contact for price</p> 
+@endif
                 </div>
 
                 {{-- ACTION BUTTON --}}

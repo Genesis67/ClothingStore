@@ -34,7 +34,11 @@
                 {{ $design->category }}
             </span>
             <h1 class="text-4xl font-bold text-gray-900 mt-2">{{ $design->design_Name }}</h1>
-            <p class="text-2xl text-gray-700 mt-4 font-light">₦{{ number_format($design->price) }}</p>
+                                      @if($design->price)
+    <p>Price: ₦{{ number_format($design->price) }}</p>
+@else
+    <p>Price: Contact for price</p> 
+@endif
             
             <div class="mt-8 border-t pt-6">
                 <h3 class="text-lg font-semibold">Description</h3>
