@@ -4,7 +4,7 @@
             
             <div class="flex items-center">
                <a href="/" class="flex items-center group">
-    <img src="{{ asset('image/logo1.jpg') }}"
+    <img src="{{ asset('image/logo3.jpg') }}"
         class="h-16 md:h-20 w-auto object-contain transition duration-500 group-hover:brightness-125" 
         alt="Veeks Clothing">
 </a>
