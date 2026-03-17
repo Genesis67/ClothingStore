@@ -30,7 +30,7 @@ public function store(StoreRequest $request)
     // 3. Handle the multiple images
     if ($request->hasFile('img_path')) {
         foreach ($request->file('img_path') as $file) {
-            $path = $file->store('designs', 'public');
+            $path = $file->store('designs', 's3');
 
             // Save each path into the SECOND table (design_images)
             $design->images()->create([
