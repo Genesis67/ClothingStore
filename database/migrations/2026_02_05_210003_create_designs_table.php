@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('design_Name');
             $table->string('description');
             $table->string('category');
-            $table->integer('price'); //made nullable
+            $table->integer('price')->nullable(); //made nullable
             $table->timestamps();
         });
     }
