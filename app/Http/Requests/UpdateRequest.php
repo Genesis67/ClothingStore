@@ -25,7 +25,7 @@ class UpdateRequest extends FormRequest
              //
             'design_Name'=>'required|string|max:25',
             'description'=>'required',
-            'price'=>'nullable|integer',
+            'price'=>'required|integer',
              'category'=>'required|in:Gowns,Two-Piece,Wedding-Attire,ready-to-wear,Dinner-Wear',
             'img_path'=>'nullable|array|max:3',
             'img_path.*'=>'image|mimes:jpg,jpeg.png|max:2048',
