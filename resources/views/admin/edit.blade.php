@@ -1,5 +1,7 @@
 @extends('layouts.app')
+
 @section('title', 'Edit Design')
+
 @section('content')
 
 <div class="bg-gray-100 min-h-screen p-8">
@@ -95,7 +97,8 @@
                 <div class="grid grid-cols-3 gap-2 mb-4">
                     @foreach($design->images as $image)
                         <div class="relative group">
-                            <img src="{{ asset('storage/' . $image->img_path) }}" 
+                            {{-- Updated to use Cloud Storage --}}
+                            <img src="{{ Storage::disk('s3')->url($image->img_path) }}" 
                                  class="h-24 w-full object-cover rounded-lg border shadow-sm">
                         </div>
                     @endforeach

@@ -36,6 +36,7 @@
                     </div>
                 </div>
 
+                {{-- Static samples stay as assets --}}
                 <div class="relative group aspect-[4/5] overflow-hidden rounded-2xl shadow-xl bg-zinc-100">
                     <img src="{{ asset('image/sample1.jpeg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Showcase 1">
                 </div>
@@ -72,7 +73,6 @@
                         <div class="relative group aspect-[4/5] overflow-hidden rounded-2xl shadow-xl bg-zinc-100 border-4 border-white">
                             <img src="{{ asset('image/sample9.jpeg') }}" class="w-full h-full object-cover transition duration-700 group-hover:scale-105" alt="Showcase 9">
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -95,7 +95,8 @@
                 @foreach($newestArrivals as $product)
                     <div class="group relative flex flex-col">
                         <div class="relative aspect-[3/4] w-full overflow-hidden bg-zinc-50 rounded-lg">
-                            <img src="{{ asset('storage/' . $product->images->first()->img_path) }}" 
+                            {{-- Database images pull from S3 bucket --}}
+                            <img src="{{ Storage::disk('s3')->url($product->images->first()->img_path) }}" 
                                  alt="{{ $product->design_Name }}" 
                                  class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-110">
                             

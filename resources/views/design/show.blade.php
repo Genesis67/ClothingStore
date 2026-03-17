@@ -12,7 +12,7 @@
             @if($design->images->isNotEmpty())
                 {{-- Main Large Image --}}
                 <div class="mb-4">
-                    <img src="{{ asset('storage/' . $design->images->first()->img_path) }}" 
+                    <img src="{{ Storage::disk('s3')->url($design->images->first()->img_path) }}" 
                          id="mainImage" 
                          class="w-full h-[500px] object-cover rounded-xl shadow-lg">
                 </div>
@@ -20,7 +20,7 @@
                 {{-- Thumbnails --}}
                 <div class="grid grid-cols-3 gap-4">
                     @foreach($design->images as $image)
-                        <img src="{{ asset('storage/' . $image->img_path) }}" 
+                        <img src="{{ Storage::disk('s3')->url($image->img_path) }}" 
                              class="h-24 w-full object-cover rounded-lg cursor-pointer hover:opacity-75 transition"
                              onclick="document.getElementById('mainImage').src = this.src">
                     @endforeach

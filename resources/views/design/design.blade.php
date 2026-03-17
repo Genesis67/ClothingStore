@@ -11,17 +11,23 @@
 
     <div class="grid md:grid-cols-3 gap-8">
 
-        {{-- START LOOP HERE: This is where you will wrap the card in a foreach loop --}}
+        {{-- START LOOP HERE --}}
         @foreach($designs as $design)
         
         <div class="bg-white rounded-lg shadow overflow-hidden flex flex-col">
            
             {{-- IMAGE SECTION --}}
-            {{-- Use the 'asset' helper with 'storage/' and the 'img_path' from your design_images table --}}
-            {{-- Since you have 3 images, you can show the 'first()' one as the main thumbnail --}}
-            <img src="{{ asset('storage/' . $design->images->first()->img_path) }}"
-                 alt="Design Image"
-                 class="h-80 w-full object-cover">
+            {{-- Switched to Storage::disk('s3') for Cloud compatibility --}}
+            @if($design->images->isNotEmpty())
+                <img src="{{ Storage::disk('s3')->url($design->images->first()->img_path) }}"
+                     alt="Design Image"
+                     class="h-80 w-full object-cover">
+            @else
+                {{-- Fallback if no image exists --}}
+                <div class="h-80 w-full bg-gray-200 flex items-center justify-center text-gray-400">
+                    No Image Available
+                </div>
+            @endif
 
             <div class="p-6 text-center">
                 {{-- CATEGORY TAG --}}
@@ -29,17 +35,15 @@
                     {{$design->category}}</span>
 
                 {{-- DESIGN NAME --}}
-                <h4 class="text-xl font-semibold mt-2">{{$design->design_name}}
-                    </h4>
+                <h4 class="text-xl font-semibold mt-2">{{$design->design_name}}</h4>
 
                 {{-- DESCRIPTION --}}
-                <p class="text-gray-500 text-sm mt-2 line-clamp-2">{{$design->description}}
-                    </p>
+                <p class="text-gray-500 text-sm mt-2 line-clamp-2">{{$design->description}}</p>
 
                 {{-- PRICE --}}
                 <div class="mt-4 text-lg font-bold text-gray-900">
-                ₦{{$design->price}}
-                    </div>
+                    ₦{{ number_format($design->price) }}
+                </div>
 
                 {{-- ACTION BUTTON --}}
                 <a href="{{route('showPage', $design)}}" 
@@ -48,7 +52,7 @@
                 </a>
             </div>
         </div>
-@endforeach
+        @endforeach
         {{-- END LOOP HERE --}}
 
     </div>
