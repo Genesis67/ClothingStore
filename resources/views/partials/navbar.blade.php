@@ -3,13 +3,11 @@
         <div class="flex justify-between h-20">
             
             <div class="flex items-center">
-                <a href="/" class="flex items-center group">
-                   
-             <img src="{{ asset('image/logo1.jpg') }}"
-                        class="h-14 md:h-16 w-auto object-contain transition duration-500 group-hover:brightness-125" 
-                        alt="Veeks Clothing"
-                    >
-                </a>
+               <a href="/" class="flex items-center group">
+    <img src="{{ asset('image/logo1.jpg') }}"
+        class="h-16 md:h-20 w-auto object-contain transition duration-500 group-hover:brightness-125" 
+        alt="Veeks Clothing">
+</a>
             </div>
 
             <div class="hidden md:flex items-center space-x-10">
