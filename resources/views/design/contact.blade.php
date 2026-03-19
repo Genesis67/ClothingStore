@@ -58,6 +58,7 @@
                                 <option value="Ready-to-Wear">Ready-to-Wear</option>
                                 <option value="Bespoke Suit/Gown">Bespoke Suit/Gown</option>
                                 <option value="Measurement Session">Measurement Session</option>
+                                   <option value="Measurement Session">other</option>
                             </select>
                         </div>
                     </div>
